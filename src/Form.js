@@ -1,22 +1,61 @@
 import React, {useState} from "react";
 
-export default function Form(){
-    
-    const teamMembers = useState("");
-    
-    function addTeamMember(props){
+const Form = props => {
+    console.log("props", props);
 
-        return null;
-    }
+    const [member, setMember] = useState({
+        name: "",
+        role: "",
+        email: ""
+    });
+
+    const handleChanges = e => {
+        console.log(member);
+        
+        setMember({
+            ...member, 
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const submitForm = event => {
+        event.preventDefault();
+        props.addNewMember(member);
+        setMember({name: "", role: "", email: ""});
+    };
 
     return(
-        <div>
-            This is the form.
-            <form onSubmit={addTeamMember}>
-                <input type="text" name="name"></input>
-                <input type="email" name="email"></input>
-                <input type="text" name="role"></input>
+            <form onSubmit={submitForm}>
+                <label htmlFor="name">Name: </label>
+                    <input 
+                    id="name" 
+                    type="text" 
+                    name="name" 
+                    onChange={handleChanges} 
+                    value={member.name}
+                    />
+
+                <label htmlFor="role">Role: </label>
+                    <input 
+                    id="role" 
+                    type="text" 
+                    name="role" 
+                    onChange={handleChanges} 
+                    value={member.role}
+                    />
+
+                <label htmlFor="email">Email: </label>
+                  <input 
+                  id="email" 
+                  type="email" 
+                  name="email" 
+                  onChange={handleChanges} 
+                  value={member.email}
+                  />
+                
+                <button type="submit">Submit</button>
             </form>
-        </div>
-    )
-}
+    );
+};
+
+export default Form;

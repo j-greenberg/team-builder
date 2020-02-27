@@ -1,24 +1,36 @@
 import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
+
 import Form from "./Form";
-
-const [teamMembers, setTeam] = useState([
-  {
-    name: '', 
-    email: '', 
-    role: ''
-  }
-]);
-
+import Members from "./Members";
 
 function App() {
+
+  const [team, setTeam] = useState([
+    {
+      id: 1,
+      name: "Bob", 
+      role: "Manager", 
+      email: "bob-manager@gmail.com"
+    }
+  ]);
+
+const addNewMember = person => {
+
+  const newMember = {
+    id: Date.now(),
+    name: person.name, 
+    role: person.role,
+    email: person.email
+  }
+  setTeam([...team, newMember]);
+}
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Form/>
-        </header>
+        <Form addNewMember={addNewMember}/>
+        <Members team={team}/>
     </div>
   );
 }
